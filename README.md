@@ -15,6 +15,11 @@ independent repetitions of each stochastic profile.
 - [Creative benchmark prompt](methodology/creative-benchmark-report-v1.0.0.md)
 - [Measurement and publication protocol](methodology/protocol.md)
 
+Each creative row in the machine-readable dataset links to its own public
+source/evidence repository. Runs with a verified distributable build also link
+to a separately deployed live demo. Failed and incomplete submissions remain
+unchanged so that the public record matches the measured result.
+
 ## What is currently measured
 
 | Track | Current evidence | Final status |
