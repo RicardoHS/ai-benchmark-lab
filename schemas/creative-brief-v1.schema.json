@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ricardohs.github.io/schemas/creative-report-brief-v1.json",
+  "title": "Creative benchmark report brief",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "prompt_id",
+    "report_id",
+    "public_title",
+    "language",
+    "result_files",
+    "benchmark_context",
+    "approach",
+    "source_links",
+    "public_data_approved"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "prompt_id": {"const": "creative-benchmark-report-v1.0.0"},
+    "report_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"
+    },
+    "public_title": {"type": "string", "minLength": 3, "maxLength": 160},
+    "public_subtitle": {"type": "string", "maxLength": 240},
+    "language": {"const": "en"},
+    "result_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/file"}
+    },
+    "benchmark_context": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "purpose", "score_interpretation"],
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "purpose": {"type": "string"},
+          "score_interpretation": {"type": "string"},
+          "limitations": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    "approach": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "benchmark_strategies"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 20},
+        "benchmark_strategies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["benchmark_id", "strategy", "rationale"],
+            "properties": {
+              "benchmark_id": {"type": "string"},
+              "strategy": {"type": "string", "minLength": 10},
+              "rationale": {"type": "string", "minLength": 10},
+              "tools_used": {
+                "type": "array",
+                "items": {"type": "string"},
+                "uniqueItems": true
+              },
+              "tradeoffs": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "alternatives_considered": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {"type": "string"},
+                "uniqueItems": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "editorial_notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "known_failures": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "assets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/asset"}
+    },
+    "source_links": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "url", "kind"],
+        "properties": {
+          "label": {"type": "string"},
+          "url": {"type": "string", "format": "uri"},
+          "kind": {
+            "enum": ["methodology", "code", "model", "dataset", "result", "external"]
+          }
+        }
+      }
+    },
+    "public_data_approved": {"const": true}
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*[.][.]/)[a-zA-Z0-9._/-]+$"
+        },
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "alt"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*[.][.]/)[a-zA-Z0-9._/-]+$"
+        },
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "alt": {"type": "string"},
+        "license": {"type": ["string", "null"]},
+        "source_url": {"type": ["string", "null"], "format": "uri"}
+      }
+    }
+  }
+}
