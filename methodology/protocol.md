@@ -28,6 +28,20 @@ The creative track still produces only one delivery *per run*. Repetition is
 used to estimate model/run variance, never to select the prettiest website and
 hide the others.
 
+## Native reasoning-effort sweep
+
+Protocol `reasoning-effort-private-five-challenge-r03` evaluates every native
+effort level on the same five committed optimization instances. Each request
+has a common 65,536-token deliberation ceiling followed by an 8,192-token
+non-thinking structured finalizer. The sampling seed is matched across effort
+levels and the finalizer uses seed + 1.
+
+Every result publishes feasibility before quality, plus candidate objective,
+frozen baseline, theoretical lower bound, normalized improvement, tokens,
+wall time and ceiling saturation. A level whose deliberations repeatedly end
+with `finish_reason=length` is marked saturated and is not treated as a clean
+comparison of native reasoning effort.
+
 ## Timing and throughput
 
 The following measurements remain separate:
